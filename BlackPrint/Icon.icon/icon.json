@@ -1,0 +1,42 @@
+{
+  "fill" : "system-dark",
+  "groups" : [
+    {
+      "blend-mode" : "hard-light",
+      "blur-material" : null,
+      "layers" : [
+        {
+          "blend-mode" : "normal",
+          "fill" : "automatic",
+          "glass" : false,
+          "hidden" : false,
+          "image-name" : "gemini-svg.svg",
+          "name" : "gemini-svg",
+          "position" : {
+            "scale" : 8,
+            "translation-in-points" : [
+              0,
+              -24
+            ]
+          }
+        }
+      ],
+      "lighting" : "individual",
+      "shadow" : {
+        "kind" : "neutral",
+        "opacity" : 0.5
+      },
+      "specular" : true,
+      "translucency" : {
+        "enabled" : true,
+        "value" : 0.5
+      }
+    }
+  ],
+  "supported-platforms" : {
+    "circles" : [
+      "watchOS"
+    ],
+    "squares" : "shared"
+  }
+}

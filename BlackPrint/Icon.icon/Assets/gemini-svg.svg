@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100%" height="100%">
+  <defs>
+    <linearGradient id="topPaperGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e8e5ef"/>
+      <stop offset="100%" stop-color="#ccc5da"/>
+    </linearGradient>
+    
+    <linearGradient id="bodyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#b6afcc"/>
+      <stop offset="100%" stop-color="#8d84a6"/>
+    </linearGradient>
+    
+    <linearGradient id="bottomPaperGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#f7f6f9"/>
+      <stop offset="100%" stop-color="#e4e0eb"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="25" y="12" width="50" height="40" rx="6" fill="url(#topPaperGrad)" />
+
+  <rect x="10" y="30" width="80" height="50" rx="14" fill="url(#bodyGrad)" />
+
+  <circle cx="74" cy="44" r="5.5" fill="#edeaf4" />
+
+  <rect x="27" y="54" width="46" height="40" rx="6" fill="url(#bottomPaperGrad)" />
+
+  <rect x="36" y="65" width="28" height="6" rx="3" fill="#9d95b4" />
+  <rect x="36" y="78" width="28" height="6" rx="3" fill="#9d95b4" />
+</svg>
