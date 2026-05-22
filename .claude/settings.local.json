@@ -4,7 +4,12 @@
       "Bash(git submodule *)",
       "Bash(brew list *)",
       "Read(//opt/homebrew/bin/**)",
-      "Read(//opt/homebrew/opt/**)"
+      "Read(//opt/homebrew/opt/**)",
+      "Bash(git commit *)",
+      "Bash(grep -E \"\\\\.\\(swift|plist|xcconfig\\)$\")",
+      "Bash(swift build *)",
+      "Bash(xcodebuild -scheme BlackPrint -configuration Debug build)",
+      "Bash(git add *)"
     ]
   }
 }

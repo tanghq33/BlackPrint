@@ -1,6 +1,7 @@
 import Foundation
 import Observation
 import AppKit
+import ServiceManagement
 
 @Observable
 final class AppSettings {
@@ -12,6 +13,14 @@ final class AppSettings {
         didSet { UserDefaults.standard.set(isDebugMode, forKey: "isDebugMode") }
     }
 
+    var autoCloseEnabled: Bool = true {
+        didSet { UserDefaults.standard.set(autoCloseEnabled, forKey: "autoCloseEnabled") }
+    }
+
+    var autoCloseDelay: Int = 3 {
+        didSet { UserDefaults.standard.set(autoCloseDelay, forKey: "autoCloseDelay") }
+    }
+
     private var printInfoData: Data? {
         didSet { UserDefaults.standard.set(printInfoData, forKey: "printInfoData") }
     }
@@ -19,6 +28,8 @@ final class AppSettings {
     init() {
         selectedPrinterName = UserDefaults.standard.string(forKey: "selectedPrinterName")
         isDebugMode = UserDefaults.standard.bool(forKey: "isDebugMode")
+        autoCloseEnabled = UserDefaults.standard.object(forKey: "autoCloseEnabled") as? Bool ?? true
+        autoCloseDelay = UserDefaults.standard.object(forKey: "autoCloseDelay") as? Int ?? 3
         printInfoData = UserDefaults.standard.data(forKey: "printInfoData")
     }
 
@@ -32,6 +43,17 @@ final class AppSettings {
 
     func savePrintInfo(_ info: NSPrintInfo) {
         printInfoData = try? NSKeyedArchiver.archivedData(withRootObject: info, requiringSecureCoding: false)
+    }
+
+    var launchAtStartup: Bool {
+        get { SMAppService.mainApp.status == .enabled }
+        set {
+            if newValue {
+                try? SMAppService.mainApp.register()
+            } else {
+                try? SMAppService.mainApp.unregister()
+            }
+        }
     }
 
     var pageSetupSummary: String {

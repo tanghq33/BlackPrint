@@ -11,38 +11,25 @@ struct ContentView: View {
     @Environment(AppSettings.self) private var settings
     @Environment(DropState.self) private var dropState
     @State private var processingState: ProcessingState = .idle
-    @State private var showSettings = false
 
     private let processor = PDFProcessor()
     private let printService = PrintService()
 
     var body: some View {
-        ZStack(alignment: .top) {
-            VStack(spacing: 0) {
-                toolbar
-                Divider()
-                dropZone
-                    .padding(16)
-                statusRow
-                    .padding(.horizontal, 16)
-                    .padding(.bottom, 12)
-            }
-            .frame(maxWidth: .infinity)
-            .offset(x: showSettings ? -320 : 0)
-            .allowsHitTesting(!showSettings)
-
-            SettingsView(isPresented: $showSettings)
-                .frame(maxWidth: .infinity)
-                .offset(x: showSettings ? 0 : 320)
-                .allowsHitTesting(showSettings)
+        VStack(spacing: 0) {
+            toolbar
+            Divider()
+            dropZone
+                .padding(16)
+            statusRow
+                .padding(.horizontal, 16)
+                .padding(.bottom, 12)
         }
         .frame(width: 320)
-        .clipped()
         .glassEffect(in: RoundedRectangle(cornerRadius: 12))
-        .animation(.easeInOut(duration: 0.22), value: showSettings)
         .environment(\.controlActiveState, .active)
         .onChange(of: dropState.pendingURLs) { _, urls in
-            guard !urls.isEmpty, !showSettings else { return }
+            guard !urls.isEmpty else { return }
             let captured = urls
             dropState.pendingURLs = []
             Task {
@@ -65,14 +52,6 @@ struct ContentView: View {
             }
             .buttonStyle(.borderless)
             .help(dropState.stayOpen ? "Panel pinned open" : "Pin panel open")
-            Button {
-                showSettings = true
-            } label: {
-                Image(systemName: "gearshape")
-                    .imageScale(.medium)
-            }
-            .buttonStyle(.borderless)
-            .help("Settings")
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 10)
@@ -175,10 +154,10 @@ struct ContentView: View {
                 successName = filename
             }
             processingState = .success(filename: successName)
-            try? await Task.sleep(for: .seconds(3))
+            try? await Task.sleep(for: .seconds(settings.autoCloseDelay))
             if processingState == .success(filename: successName) {
                 processingState = .idle
-                if !dropState.stayOpen {
+                if settings.autoCloseEnabled && !dropState.stayOpen {
                     dropState.closePanel?()
                 }
             }
